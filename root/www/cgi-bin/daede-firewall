@@ -1,0 +1,31 @@
+#!/bin/sh
+# daede-firewall - 管理防火墙隔离规则
+# GET: 返回当前状态
+# POST: 设置 icmp_echo_ignore_all, lan_isolation
+
+case "$REQUEST_METHOD" in
+  GET)
+    echo "Content-Type: application/json"
+    echo ""
+    icmp=$(sysctl -n net.ipv4.icmp_echo_ignore_all 2>/dev/null || echo 0)
+    iptables -C FORWARD -i br-lan -o br-lan -j DROP 2>/dev/null && lan=1 || lan=0
+    echo "{\"icmp_echo_ignore_all\":$icmp,\"lan_isolation\":$lan}"
+    ;;
+  POST)
+    echo "Content-Type: application/json"
+    echo ""
+    read -r input
+    icmp=$(echo "$input" | jq -r '.icmp_echo_ignore_all')
+    lan=$(echo "$input" | jq -r '.lan_isolation')
+    sysctl -w net.ipv4.icmp_echo_ignore_all=$icmp
+    echo "net.ipv4.icmp_echo_ignore_all=$icmp" >> /etc/sysctl.conf
+    if [ "$lan" = "1" ]; then
+      iptables -I FORWARD -i br-lan -o br-lan -j DROP
+      ip6tables -I FORWARD -i br-lan -o br-lan -j DROP
+    else
+      iptables -D FORWARD -i br-lan -o br-lan -j DROP 2>/dev/null
+      ip6tables -D FORWARD -i br-lan -o br-lan -j DROP 2>/dev/null
+    fi
+    echo '{"status":"ok"}'
+    ;;
+esac

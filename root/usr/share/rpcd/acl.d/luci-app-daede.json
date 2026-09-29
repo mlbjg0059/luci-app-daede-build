@@ -1,0 +1,15 @@
+{
+  "daede": {
+    "description": "DAE management",
+    "read": {
+      "ubus": { "daed": ["*"] },
+      "uci": ["daed"],
+      "luci": ["daede"]
+    },
+    "write": {
+      "ubus": { "daed": ["*"] },
+      "uci": ["daed"],
+      "luci": ["daede"]
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "daede": {
+    "title": "DAE",
+    "order": 50,
+    "children": {
+      "dashboard": { "title": "实时监控", "order": 10, "action": "view", "path": "/admin/services/daede/dashboard" },
+      "system-tuning": { "title": "系统调优", "order": 20, "action": "view", "path": "/admin/services/daede/system-tuning" },
+      "lan-isolation": { "title": "局域网隔离", "order": 30, "action": "view", "path": "/admin/services/daede/lan-isolation" },
+      "subscription": { "title": "订阅管理", "order": 40, "action": "view", "path": "/admin/services/daede/subscription" },
+      "subscription-convert": { "title": "订阅转换", "order": 45, "action": "view", "path": "/admin/services/daede/subscription/convert" },
+      "online-update": { "title": "在线更新", "order": 50, "action": "view", "path": "/admin/services/daede/online-update" },
+      "settings": { "title": "设置", "order": 60, "action": "view", "path": "/admin/services/daede/settings" },
+      "logs": { "title": "日志", "order": 70, "action": "view", "path": "/admin/services/daede/logs" }
+    }
+  }
+}

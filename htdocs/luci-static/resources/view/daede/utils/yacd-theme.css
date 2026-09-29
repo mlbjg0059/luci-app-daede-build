@@ -1,0 +1,161 @@
+:root {
+  --yacd-primary: #409EFF;
+  --yacd-primary-hover: #66B1FF;
+  --yacd-primary-light: rgba(64, 158, 255, 0.12);
+  --yacd-success: #67C23A;
+  --yacd-success-light: rgba(103, 194, 58, 0.12);
+  --yacd-warning: #E6A23C;
+  --yacd-warning-light: rgba(230, 162, 60, 0.12);
+  --yacd-danger: #F56C6C;
+  --yacd-danger-light: rgba(245, 108, 108, 0.12);
+  --yacd-info: #909399;
+  --yacd-info-light: rgba(144, 147, 153, 0.12);
+
+  --yacd-bg: #F5F7FA;
+  --yacd-card: #FFFFFF;
+  --yacd-border: #EBEEF5;
+  --yacd-divider: #EBEEF5;
+
+  --yacd-text: #303133;
+  --yacd-text-secondary: #606266;
+  --yacd-text-placeholder: #C0C4CC;
+  --yacd-text-disabled: #C0C4CC;
+
+  --yacd-radius: 6px;
+  --yacd-radius-sm: 4px;
+  --yacd-radius-lg: 8px;
+
+  --yacd-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  --yacd-shadow-hover: 0 4px 20px rgba(0, 0, 0, 0.12);
+  --yacd-shadow-light: 0 1px 4px rgba(0, 0, 0, 0.06);
+
+  --yacd-transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --yacd-transition-fast: all 0.15s ease;
+
+  --yacd-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  --yacd-shadow-hover: 0 4px 20px rgba(0, 0, 0, 0.12);
+  --yacd-shadow-light: 0 1px 4px rgba(0, 0, 0, 0.06);
+
+  --yacd-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  --yacd-font-size-base: 14px;
+  --yacd-font-size-sm: 13px;
+  --yacd-font-size-lg: 16px;
+  --yacd-font-size-xl: 20px;
+  --yacd-font-weight-normal: 400;
+  --yacd-font-weight-medium: 500;
+  --yacd-font-weight-semibold: 600;
+  --yacd-font-weight-bold: 700;
+
+  --yacd-spacing-xs: 4px;
+  --yacd-spacing-sm: 8px;
+  --yacd-spacing-md: 16px;
+  --yacd-spacing-lg: 24px;
+  --yacd-spacing-xl: 32px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: var(--yacd-font-size-base);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--yacd-font-family);
+  font-size: var(--yacd-font-size-base);
+  line-height: 1.5;
+  color: var(--yacd-text);
+  background: var(--yacd-bg);
+}
+
+a { color: var(--yacd-primary); text-decoration: none; }
+a:hover { color: var(--yacd-primary-hover); }
+
+button {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+::selection {
+  background: var(--yacd-primary-light);
+  color: var(--yacd-primary);
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--yacd-border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--yacd-text-placeholder);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --yacd-bg: #1A1A2E;
+    --yacd-card: #1F1F3A;
+    --yacd-border: #2D2D4A;
+    --yacd-divider: #2D2D4A;
+    --yacd-text: #E4E4E4;
+    --yacd-text-secondary: #A0A0B0;
+    --yacd-text-placeholder: #606070;
+    --yacd-bg: #1A1A2E;
+    --yacd-card: #1F1F3A;
+    --yacd-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+    --yacd-shadow-hover: 0 4px 20px rgba(0, 0, 0, 0.4);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-12px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.animate-spin { animation: spin 1s linear infinite; }
+.animate-pulse { animation: pulse 2s ease-in-out infinite; }
+.animate-fade-in { animation: fadeIn 0.3s ease-out; }
+.animate-slide-in { animation: slideIn 0.3s ease-out; }

@@ -1,0 +1,13 @@
+#!/bin/sh
+# daede-update - 在线更新：下载 IPK 并安装
+# POST: { "packageUrl": "...", "sha256": "..." }
+
+read -r input
+url=$(echo "$input" | jq -r '.packageUrl')
+sha=$(echo "$input" | jq -r '.sha256')
+
+tmp="/tmp/daed-update.ipk"
+wget -qO "$tmp" "$url" || { echo '{"error":"下载失败"}'; exit 1; }
+[ -n "$sha" ] && [ "$(sha256sum "$tmp" | cut -d' ' -f1)" != "$sha" ] && { echo '{"error":"SHA256 校验失败"}'; rm -f "$tmp"; exit 1; }
+
+opkg install "$tmp" && rm -f "$tmp" && echo '{"status":"success"}' || { echo '{"error":"安装失败"}'; rm -f "$tmp"; exit 1; }

@@ -1,0 +1,5 @@
+config daed 'main'
+	option enabled '1'
+	option graphql_port '2023'
+	option web_port '8080'
+	option log_level 'info'

@@ -1,0 +1,22 @@
+#!/bin/sh
+# 90-luci-app-daede-init - 初始化 DAE 配置
+
+# 设置默认配置
+uci -q batch <<-EOF
+	set daed.main.enabled='1'
+	set daed.main.graphql_port='2023'
+	set daed.main.web_port='8080'
+	set daed.main.log_level='info'
+	commit daed
+EOF
+
+# 创建必要的目录
+mkdir -p /etc/daed
+mkdir -p /var/log/daed
+mkdir -p /www/daed-ui
+
+# 设置权限
+chmod 755 /usr/share/luci-app-daede/*.sh 2>/dev/null
+chmod +x /www/cgi-bin/daede-* 2>/dev/null
+
+exit 0

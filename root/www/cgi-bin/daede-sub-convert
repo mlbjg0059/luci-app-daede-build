@@ -1,0 +1,18 @@
+#!/bin/sh
+# daede-sub-convert - Clash 订阅转 DAE 配置
+# POST: { "url": "...", "name": "...", "groupName": "..." }
+
+read -r input
+url=$(echo "$input" | jq -r '.url')
+name=$(echo "$input" | jq -r '.name')
+group=$(echo "$input" | jq -r '.groupName')
+
+# 下载并解析
+yaml=$(wget -qO- "$url" 2>/dev/null || curl -fsSL "$url")
+[ -z "$yaml" ] && { echo '{"error":"下载失败"}'; exit 1; }
+
+# 调用现有转换脚本
+config=$(echo "$yaml" | /usr/share/luci-app-daede/clash2dae.sh "$name" "$group" 2>/dev/null)
+[ -z "$config" ] && { echo '{"error":"转换失败"}'; exit 1; }
+
+echo "{\"config\":$(echo "$config" | jq -Rs .)}"
