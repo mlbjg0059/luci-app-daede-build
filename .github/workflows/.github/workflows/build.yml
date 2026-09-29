@@ -1,0 +1,45 @@
+name: Build OpenWrt IPK
+
+on: 
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Initialization Environment
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-dependent-tools gawk libncurses5-dev zlib1g-dev git libssl-dev wget unzip python3
+
+      - name: Download OpenWrt SDK
+        run: |
+          # 以 24.10 x86_64 SDK 为例
+          wget https://downloads.openwrt.org/releases/24.10.0/targets/x86/64/openwrt-sdk-24.10.0-x86-64_gcc-13.3.0_musl.Linux-x86_64.tar.xz
+          tar -Jxf openwrt-sdk-*.tar.xz
+          mv openwrt-sdk-* sdk
+          
+      - name: Compile Package
+        run: |
+          cd sdk
+          # 将你的源码放到 SDK 的 package 目录下
+          mkdir -p package/luci-app-daede
+          cp -r ../* package/luci-app-daede/ 2>/dev/null || true
+          
+          # 更新 feeds 并编译
+          ./scripts/feeds update -a
+          ./scripts/feeds install -a
+          make package/luci-app-daede/compile V=s
+
+      - name: Upload IPK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: luci-app-daede-ipk
+          path: sdk/bin/packages/x86_64/base/*.ipk
